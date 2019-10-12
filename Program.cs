@@ -32,7 +32,8 @@ namespace Tail
 
             using (var watcher = new FileSystemWatcher())
             {
-                watcher.Path = Path.GetDirectoryName(FilePath);
+                var dir = Path.GetDirectoryName(FilePath);
+                watcher.Path = string.IsNullOrEmpty(dir) ? Directory.GetCurrentDirectory() : dir;
                 watcher.Filter = Path.GetFileName(FilePath);
                 watcher.NotifyFilter = NotifyFilters.LastAccess
                                      | NotifyFilters.LastWrite
@@ -52,13 +53,28 @@ namespace Tail
 
         private static void Refresh()
         {
-            Console.Clear();
+            var tail = new List<String>();
             var encoding = GetEncoding(FilePath);
-            var lines = File.ReadAllLines(FilePath, encoding);
-            var tailLines = lines.Length > TailLineCount ? lines.Skip(lines.Length - TailLineCount).ToArray() : lines;
-            foreach (var tailLine in tailLines)
+            using (var stream = File.Open(FilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
-                Console.WriteLine(tailLine);
+                using (var reader = new StreamReader(stream, encoding))
+                {
+                    while (reader.Peek() >= 0)
+                    {
+                        var line = reader.ReadLine();
+                        tail.Add(line);
+
+                        if (tail.Count > TailLineCount)
+                        {
+                            tail.RemoveAt(0);
+                        }
+                    }
+                }
+            }
+            Console.Clear();
+            foreach (var line in tail)
+            {
+                Console.WriteLine(line);
             }
         }
 
