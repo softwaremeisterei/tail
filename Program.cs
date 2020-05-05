@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Tail
 {
     class Program
     {
-        static int TailLineCount = 10;
+        static readonly int TailLineCount = 10;
         static string FilePath;
 
         static void Main(string[] args)
@@ -80,7 +78,7 @@ namespace Tail
 
         private static void PrintUsage()
         {
-            Console.WriteLine("Usage: tail [FILE]");
+            Console.WriteLine("Usage: tail <filename>");
         }
 
         public static Encoding GetEncoding(string filename)
