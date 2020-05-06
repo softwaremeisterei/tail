@@ -5,4 +5,4 @@ Simple Windows console port of the [unix version](https://en.wikipedia.org/wiki/
 - no pipes
 - just the filename
 
-      Usage: tail \<filename\>
+      Usage: tail <filename>
