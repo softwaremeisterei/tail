@@ -1,3 +1,7 @@
-﻿## TAIL -  display the tail end of a text file, written in C#
+﻿## TAIL - Display the tail end of a text file, written in C# (Console)
 
-Simple Windows Console port of the [unix version](https://en.wikipedia.org/wiki/Tail_(Unix)), no options, pipes not supported.
+Simple Windows console port of the [unix version](https://en.wikipedia.org/wiki/Tail_(Unix))
+- no options
+- no pipes
+
+  Usage: tail \<filename\>
